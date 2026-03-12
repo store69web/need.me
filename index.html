@@ -13,6 +13,7 @@
             --accent-1: #00f2fe;
             --accent-2: #4facfe;
             --accent-3: #7000ff;
+            --whatsapp: #25d366;
             --danger: #ff0844;
             --glass: rgba(255, 255, 255, 0.03);
             --glass-border: rgba(255, 255, 255, 0.07);
@@ -169,6 +170,9 @@
         }
 
         .link-row:hover { background: rgba(255,255,255,0.07); padding-left: 30px; border-color: var(--glass-border); }
+        
+        /* WhatsApp Specific Style */
+        .wa-link:hover { border-color: rgba(37, 211, 102, 0.4); background: rgba(37, 211, 102, 0.05); }
 
         @media (max-width: 1050px) {
             .bento-container { grid-template-columns: repeat(2, 1fr); }
@@ -239,29 +243,42 @@
 
         <section class="card booking">
             <h2 style="font-size: 1.8rem; margin-bottom: 20px;">Secure Booking</h2>
-            <form action="https://formspree.io/f/diptarafd3t@gmail.com" method="POST">
-                <input type="text" name="client_name" placeholder="Your Name" class="input-field" required>
-                <input type="email" name="client_email" placeholder="Email Address" class="input-field" required>
+            <form id="contact-wa" action="https://wa.me/qr/KMJH36GYYS26B1" method="POST">
+                <input type="hidden" name="_subject" value="New Inquiry from Portfolio">
+                <input type="text" name="_gotcha" style="display:none">
+
+                <input type="text" name="name" placeholder="Your Name" class="input-field" required>
+                <input type="email" name="email" placeholder="Email Address" class="input-field" required>
                 
-                <select name="selected_tier" class="input-field" required>
+                <select name="tier" class="input-field" required>
                     <option value="" disabled selected>Select Tier</option>
                     <option value="Single Web (699)">Single Web (699)</option>
                     <option value="Weekly (1,999)">Weekly (1,999)</option>
                     <option value="Enterprise (29,999)">Enterprise (29,999)</option>
                 </select>
                 
-                <textarea name="project_details" class="input-field" placeholder="Project details..." style="height: 100px;" required></textarea>
+                <textarea name="message" class="input-field" placeholder="Project details,💡[if failed take screenshot and sent me at whatsapp-direct]" style="height: 100px;" required></textarea>
                 
-                <button type="submit" class="submit-btn">SEND INQUIRY</button>
+                <button type="submit" id="submit-button" class="submit-btn">SEND INQUIRY</button>
+                <p id="form-status" style="margin-top: 15px; font-size: 0.9rem; text-align: center; font-weight: 600;"></p>
             </form>
         </section>
 
         <section class="card connect">
             <h2 style="font-size: 1.5rem; margin-bottom: 20px;">Gateways</h2>
+            
+            <a href="https://wa.me/qr/KMJH36GYYS26B1" target="_blank" class="link-row wa-link">
+                <span style="display: flex; align-items: center; gap: 10px;">
+                    <span style="color: var(--whatsapp); font-size: 1.2rem;">●</span> WhatsApp Direct
+                </span>
+                <span style="opacity: 0.5;">→</span>
+            </a>
+
             <a href="https://github.com/diptarafd3t-cell" target="_blank" class="link-row">
                 <span>GitHub Archive</span>
                 <span style="opacity: 0.5;">→</span>
             </a>
+            
             <a href="https://diptarafd3t-cell.github.io/Contact-me-Dip/" target="_blank" class="link-row">
                 <span>Contact.In</span>
                 <span style="opacity: 0.5;">→</span>
@@ -271,13 +288,52 @@
     </main>
 
     <script>
+        // AJAX Form Submission
+        const form = document.getElementById("contact-form");
+        const status = document.getElementById("form-status");
+        const button = document.getElementById("submit-button");
+
+        async function handleSubmit(event) {
+            event.preventDefault();
+            button.disabled = true;
+            button.innerText = "SENDING...";
+            status.innerText = "";
+
+            const data = new FormData(event.target);
+            
+            fetch(event.target.action, {
+                method: form.method,
+                body: data,
+                headers: { 'Accept': 'application/json' }
+            }).then(response => {
+                if (response.ok) {
+                    status.innerHTML = "Inquiry Sent! Check your email.";
+                    status.style.color = "var(--accent-1)";
+                    form.reset();
+                    button.innerText = "DONE";
+                } else {
+                    status.innerText = "Error! Please try again.";
+                    status.style.color = "var(--danger)";
+                }
+            }).catch(error => {
+                status.innerText = "Connection Error.";
+                status.style.color = "var(--danger)";
+            }).finally(() => {
+                button.disabled = false;
+                if(button.innerText !== "DONE") {
+                    setTimeout(() => { button.innerText = "SEND INQUIRY"; }, 2500);
+                }
+            });
+        }
+        form.addEventListener("submit", handleSubmit);
+
+        // Copy Number
         function copyNum(num, el) {
             navigator.clipboard.writeText(num).then(() => {
                 const numDisplay = el.querySelector('.num');
                 const originalText = numDisplay.innerText;
                 numDisplay.innerText = 'COPIED!';
                 numDisplay.style.color = 'var(--accent-1)';
-                
                 setTimeout(() => { 
                     numDisplay.innerText = originalText; 
                     numDisplay.style.color = '#fff';
@@ -286,4 +342,4 @@
         }
     </script>
 </body>
-</html>
+                </html>
