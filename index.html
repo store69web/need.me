@@ -233,21 +233,23 @@
         </section>
 
         <section class="card booking">
-            <h2 style="font-size: 1.8rem; margin-bottom: 20px;">Secure Booking</h2>
-            <form onsubmit="event.preventDefault();">
-                <input type="text" placeholder="Your Name" class="input-field">
-                <input type="email" placeholder="Email Address" class="input-field">
-                <select class="input-field">
-                    <option>Select Tier</option>
-                    <option>Single Web (699)</option>
-                    <option>Weekly (1,999)</option>
-                    <option>Enterprise (29,999)</option>
-                </select>
-                <textarea class="input-field" placeholder="Project details..." style="height: 100px;"></textarea>
-                <button class="submit-btn">SEND INQUIRY</button>
-            </form>
-        </section>
-
+    <h2 style="font-size: 1.8rem; margin-bottom: 20px;">Secure Booking</h2>
+    <form action="https://formspree.io/f/diptarafd3t@gmail.com" method="POST">
+        <input type="text" name="name" placeholder="Your Name" class="input-field" required>
+        <input type="email" name="email" placeholder="Email Address" class="input-field" required>
+        
+        <select name="tier" class="input-field">
+            <option disabled selected>Select Tier</option>
+            <option value="Single Web">Single Web (699)</option>
+            <option value="Weekly">Weekly (1,999)</option>
+            <option value="Enterprise">Enterprise (29,999)</option>
+        </select>
+        
+        <textarea name="message" class="input-field" placeholder="Project details..." style="height: 100px;" required></textarea>
+        
+        <button type="submit" class="submit-btn">SEND INQUIRY</button>
+    </form>
+</section>
         <section class="card connect">
             <h2 style="font-size: 1.5rem; margin-bottom: 20px;">Gateways</h2>
             <a href="https://github.com/diptarafd3t-cell" class="link-row">
