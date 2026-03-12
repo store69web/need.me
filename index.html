@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dip Tarafdar | Premium Digital Architect</title>
+    <meta name="description" content="Personal portfolio of Dip Tarafdar, focusing on premium web architecture and design.">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@300;400;700&display=swap" rel="stylesheet">
     
     <style>
@@ -134,7 +135,10 @@
             color: white;
             margin-bottom: 12px;
             font-size: 0.95rem;
+            outline: none;
         }
+
+        .input-field:focus { border-color: var(--accent-1); }
 
         .submit-btn {
             width: 100%;
@@ -148,7 +152,7 @@
             transition: 0.3s;
         }
 
-        .submit-btn:hover { background: var(--accent-1); }
+        .submit-btn:hover { background: var(--accent-1); transform: scale(1.02); }
 
         .link-row {
             display: flex;
@@ -164,7 +168,7 @@
             transition: 0.3s;
         }
 
-        .link-row:hover { background: rgba(255,255,255,0.07); padding-left: 30px; }
+        .link-row:hover { background: rgba(255,255,255,0.07); padding-left: 30px; border-color: var(--glass-border); }
 
         @media (max-width: 1050px) {
             .bento-container { grid-template-columns: repeat(2, 1fr); }
@@ -174,6 +178,7 @@
         @media (max-width: 650px) {
             .bento-container { grid-template-columns: 1fr; }
             .hero, .tier-wide, .payment, .booking, .connect, .tier-small { grid-column: span 1; }
+            h1 { font-size: 2.5rem; }
         }
     </style>
 </head>
@@ -184,10 +189,10 @@
     <main class="bento-container">
         
         <section class="card hero">
-            <div class="tag">Available for works</div>
+            <div class="tag">Available for work</div>
             <h1>The <span class="gradient-text">Premium Experience</span> <br>With Dip</h1>
             <p style="color: var(--text-mid); font-size: 1.1rem; max-width: 420px;">
-                Fusing high-performance code with luxury digital aesthetics. <br>#diptarafder_officials
+                Fusing high-performance code with luxury digital aesthetics.
             </p>
         </section>
 
@@ -233,30 +238,31 @@
         </section>
 
         <section class="card booking">
-    <h2 style="font-size: 1.8rem; margin-bottom: 20px;">Secure Booking</h2>
-    <form action="https://formspree.io/f/diptarafd3t@gmail.com" method="POST">
-        <input type="text" name="name" placeholder="Your Name" class="input-field" required>
-        <input type="email" name="email" placeholder="Email Address" class="input-field" required>
-        
-        <select name="tier" class="input-field">
-            <option disabled selected>Select Tier</option>
-            <option value="Single Web">Single Web (699)</option>
-            <option value="Weekly">Weekly (1,999)</option>
-            <option value="Enterprise">Enterprise (29,999)</option>
-        </select>
-        
-        <textarea name="message" class="input-field" placeholder="Project details..." style="height: 100px;" required></textarea>
-        
-        <button type="submit" class="submit-btn">SEND INQUIRY</button>
-    </form>
-</section>
+            <h2 style="font-size: 1.8rem; margin-bottom: 20px;">Secure Booking</h2>
+            <form action="https://formspree.io/f/diptarafd3t@gmail.com" method="POST">
+                <input type="text" name="client_name" placeholder="Your Name" class="input-field" required>
+                <input type="email" name="client_email" placeholder="Email Address" class="input-field" required>
+                
+                <select name="selected_tier" class="input-field" required>
+                    <option value="" disabled selected>Select Tier</option>
+                    <option value="Single Web (699)">Single Web (699)</option>
+                    <option value="Weekly (1,999)">Weekly (1,999)</option>
+                    <option value="Enterprise (29,999)">Enterprise (29,999)</option>
+                </select>
+                
+                <textarea name="project_details" class="input-field" placeholder="Project details..." style="height: 100px;" required></textarea>
+                
+                <button type="submit" class="submit-btn">SEND INQUIRY</button>
+            </form>
+        </section>
+
         <section class="card connect">
             <h2 style="font-size: 1.5rem; margin-bottom: 20px;">Gateways</h2>
-            <a href="https://github.com/diptarafd3t-cell" class="link-row">
+            <a href="https://github.com/diptarafd3t-cell" target="_blank" class="link-row">
                 <span>GitHub Archive</span>
                 <span style="opacity: 0.5;">→</span>
             </a>
-            <a href="https://diptarafd3t-cell.github.io/Contact-me-Dip/" class="link-row">
+            <a href="https://diptarafd3t-cell.github.io/Contact-me-Dip/" target="_blank" class="link-row">
                 <span>Contact.In</span>
                 <span style="opacity: 0.5;">→</span>
             </a>
@@ -266,10 +272,17 @@
 
     <script>
         function copyNum(num, el) {
-            navigator.clipboard.writeText(num);
-            const original = el.innerHTML;
-            el.innerHTML = '<p style="color:var(--accent-1); font-weight:800; text-align:center;">COPIED!</p>';
-            setTimeout(() => { el.innerHTML = original; }, 1500);
+            navigator.clipboard.writeText(num).then(() => {
+                const numDisplay = el.querySelector('.num');
+                const originalText = numDisplay.innerText;
+                numDisplay.innerText = 'COPIED!';
+                numDisplay.style.color = 'var(--accent-1)';
+                
+                setTimeout(() => { 
+                    numDisplay.innerText = originalText; 
+                    numDisplay.style.color = '#fff';
+                }, 1500);
+            });
         }
     </script>
 </body>
